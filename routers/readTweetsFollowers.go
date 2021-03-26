@@ -22,7 +22,7 @@ func ReadTweetsFollowers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response, works := bd.ReadTweetsFollowers(IDUsuario, page)
-	if !works {
+	if works == false {
 		http.Error(w, "Error al leer los tweets", http.StatusBadRequest)
 		return
 	}

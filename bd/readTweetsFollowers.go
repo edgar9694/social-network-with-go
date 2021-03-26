@@ -16,14 +16,13 @@ func ReadTweetsFollowers(ID string, page int) ([]models.TweetsFollowers, bool) {
 	col := db.Collection("relation")
 
 	skip := (page - 1) * 20
-
 	// MANERA QUE TIENE MONGODB DE UNIR DOS TABLAS
 	condition := make([]bson.M, 0)
 	condition = append(condition, bson.M{"$match": bson.M{"userid": ID}})
 	condition = append(condition, bson.M{
 		"$lookup": bson.M{
 			"from":         "tweet",
-			"localfield":   "userrelationid",
+			"localField":   "userrelationid",
 			"foreignField": "userid",
 			"as":           "tweet",
 		}})
@@ -31,10 +30,12 @@ func ReadTweetsFollowers(ID string, page int) ([]models.TweetsFollowers, bool) {
 	condition = append(condition, bson.M{"$sort": bson.M{"tweet.date": -1}})
 	condition = append(condition, bson.M{"$skip": skip})
 	condition = append(condition, bson.M{"$limit": 20})
-
-	cursor, _ := col.Aggregate(ctx, condition)
+	cursor, err := col.Aggregate(ctx, condition)
 	var result []models.TweetsFollowers
-	err := cursor.All(ctx, &result)
+	if err != nil {
+		return result, false
+	}
+	err = cursor.All(ctx, &result)
 	if err != nil {
 		return result, false
 	}
