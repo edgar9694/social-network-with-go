@@ -32,6 +32,8 @@ func Handlers() {
 	router.HandleFunc("/bajarelacion", middlew.CheckDB(middlew.CheckJWT(routers.LowRelation))).Methods("DELETE")
 	router.HandleFunc("/consultarelacion", middlew.CheckDB(middlew.CheckJWT(routers.ConsultRelation))).Methods("GET")
 
+	router.HandleFunc("/listausuarios", middlew.CheckDB(middlew.CheckJWT(routers.ListUsers))).Methods("GET")
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
