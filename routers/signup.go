@@ -29,7 +29,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_, exists, _ := bd.CheckUserExists(t.Email)
-	if exists == true {
+	if exists {
 		http.Error(w, "Ya existe un usuario registrado con este correo", 400)
 		return
 	}
@@ -40,7 +40,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if status == false {
+	if !status {
 		http.Error(w, "No se ha logrado insertar el registro del usuario "+err.Error(), 400)
 		return
 	}

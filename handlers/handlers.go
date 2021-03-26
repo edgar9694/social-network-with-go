@@ -23,6 +23,11 @@ func Handlers() {
 	router.HandleFunc("/leotweet", middlew.CheckDB(middlew.CheckJWT(routers.ReadTweets))).Methods("GET")
 	router.HandleFunc("/eliminartweet", middlew.CheckDB(middlew.CheckJWT(routers.DeleteTweet))).Methods("DELETE")
 
+	router.HandleFunc("/subiravatar", middlew.CheckDB(middlew.CheckJWT(routers.UploadAvatar))).Methods("POST")
+	router.HandleFunc("/obteneravatar", middlew.CheckDB(routers.ObtainAvatar)).Methods("GET")
+	router.HandleFunc("/subirbanner", middlew.CheckDB(middlew.CheckJWT(routers.UploadBanner))).Methods("POST")
+	router.HandleFunc("/obtenerbanner", middlew.CheckDB(routers.ObtainBanner)).Methods("GET")
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
