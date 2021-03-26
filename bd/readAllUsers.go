@@ -49,7 +49,7 @@ func ReadAllUsers(ID string, page int64, search string, userType string) ([]*mod
 		r.UserRelationID = s.ID.Hex()
 
 		included = false
-		finded, err = ConsultRelation(r)
+		finded, _ = ConsultRelation(r)
 		if userType == "new" && !finded {
 			included = true
 		}
