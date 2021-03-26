@@ -36,12 +36,12 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 
 	_, status, err := bd.InsertSignup(t)
 	if err != nil {
-		http.Error(w, "Ocurrió un error al intentar realizar el registro del usuario"+err.Error(), 400)
+		http.Error(w, "Ocurrió un error al intentar realizar el registro del usuario "+err.Error(), 400)
 		return
 	}
 
 	if status == false {
-		http.Error(w, "No se ha logrado insertar el registro del usuario"+err.Error(), 400)
+		http.Error(w, "No se ha logrado insertar el registro del usuario "+err.Error(), 400)
 		return
 	}
 
